@@ -3,7 +3,7 @@ local elixir = require("elixir")
 elixir.setup({
 	-- specify a repository and branch
 	repo = "mhanberg/elixir-ls", -- defaults to elixir-lsp/elixir-ls
-	branch = "mh/all-workspace-symbols", -- defaults to nil, just checkouts out the default branch, mutually exclusive with the `tag` option
+	branch = "mh/all-rworrkspace-symbols", -- defaults to nil, just checkouts out the default branch, mutually exclusive with the `tag` option
 	tag = "v0.12.0", -- defaults to nil, mutually exclusive with the `branch` option
 
 	-- alternatively, point to an existing elixir-ls installation (optional)

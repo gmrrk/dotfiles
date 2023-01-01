@@ -40,8 +40,6 @@ return require("packer").startup(function(use)
 	-- commenting with gc
 	use("numToStr/Comment.nvim")
 
-	--file tree
-	use("nvim-tree/nvim-tree.lua")
 
 	-- Telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
