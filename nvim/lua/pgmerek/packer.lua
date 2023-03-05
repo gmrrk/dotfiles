@@ -29,6 +29,8 @@ return require("packer").startup(function(use)
 
 	-- Highlighting
 	use("nvim-treesitter/nvim-treesitter")
+    use("nvim-treesitter/nvim-treesitter-context")
+
 	-- Git
 	use("lewis6991/gitsigns.nvim")
 
@@ -36,6 +38,10 @@ return require("packer").startup(function(use)
 
 	--esssential
 	use("tpope/vim-surround")
+    use {
+	    "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
 
 	-- commenting with gc
 	use("numToStr/Comment.nvim")
