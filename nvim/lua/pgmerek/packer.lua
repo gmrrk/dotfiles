@@ -28,11 +28,12 @@ return require("packer").startup(function(use)
 	use("nvim-lua/plenary.nvim")
 
 	-- Highlighting
-	use("nvim-treesitter/nvim-treesitter")
+	use("nvim-treesitter/nvim-treesitter", {run = 'TSUpdate'})
     use("nvim-treesitter/nvim-treesitter-context")
 
 	-- Git
 	use("lewis6991/gitsigns.nvim")
+    use("tpope/vim-fugitive")
 
 	use("christoomey/vim-tmux-navigator")
 
@@ -42,10 +43,10 @@ return require("packer").startup(function(use)
 	    "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
+    use("mbbill/undotree")
 
 	-- commenting with gc
 	use("numToStr/Comment.nvim")
-
 
 	-- Telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
@@ -54,6 +55,7 @@ return require("packer").startup(function(use)
 		branch = "0.1.x",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+    use('theprimeagen/harpoon')
 
 	-- lsp stuff
 	use({
