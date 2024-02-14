@@ -1,10 +1,32 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
+  imports = [
+    inputs.xremap-flake.homeManagerModules.default
+  ];
+
   home.username = "gmrrk";
   home.homeDirectory = "/home/gmrrk";
 
   home.stateVersion = "23.11";
+
+  services.xremap = {
+    withSway = true;
+    config = {
+      keymap = [
+        {
+          name = "ctrl/esc";
+          remap = {
+            CapsLock = {
+              held = "leftctrl";
+              alone = "esc";
+              alone_timeout_millis = 150;
+            };
+          };
+        }
+      ];
+    };
+  };
 
   wayland.windowManager.sway = {
     enable = true;
@@ -28,14 +50,50 @@
         {
           position = "top";
           mode = "dock";
+          fonts = [ "DejaVu Sans Mono, FontAwesome 10" ];
           statusCommand =
-            "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-default.toml";
+            "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-top.toml";
         }
       ];
       window = {
         border = 2;
         titlebar = false;
       };
+      output = {
+        "*".bg = "~/Downloads/evening-sky.png fill";
+      };
+    };
+  };
+
+  programs.i3status-rust = {
+    enable = true;
+    bars.top = {
+      blocks = [
+        {
+          block = "cpu";
+          format = "CPU $barchart $utilization   ";
+        }
+        {
+          block = "memory";
+          format = "$icon $mem_used_percents.eng(w:1)  ";
+          interval = 30;
+          warning_mem = 80;
+          critical_mem = 95;
+        }
+        {
+          block = "sound";
+        }
+        {
+          block = "battery";
+          format = "  $icon $percentage   ";
+        }
+        {
+          block = "time";
+          format = "$icon $timestamp.datetime(f:'%a %d/%m/%Y %R') ";
+        }
+      ];
+      icons = "awesome6";
+      theme = "srcery";
     };
   };
   # The home.packages option allows you to install Nix packages into your
@@ -47,6 +105,7 @@
     pkgs.cargo
     pkgs.rustc
     pkgs.swayidle
+    pkgs.swaybg
     pkgs.wl-clipboard
     pkgs.mako
     # (pkgs.writeShellScriptBin "my-hello" ''
@@ -55,10 +114,6 @@
   ];
 
   programs.swaylock.enable = true;
-
-  programs.i3status-rust = {
-    enable = true;
-  };
 
   programs.bemenu = {
     enable = true;
@@ -82,9 +137,21 @@
 
   programs.zsh = {
     enable = true;
+    shellAliases = {
+      vim = "nvim";
+    };
+    enableCompletion = false;
     enableAutosuggestions = true;
-    enableCompletion = true;
+    initExtra = ''
+      # z - jump around
+      source ${pkgs.fetchurl {url = "https://github.com/rupa/z/raw/2ebe419ae18316c5597dd5fb84b5d8595ff1dde9/z.sh"; sha256 = "0ywpgk3ksjq7g30bqbhl9znz3jh6jfg8lxnbdbaiipzgsy41vi10";}}
+      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh
+      export ZSH_THEME="robbyrussell"
+      plugins=(git)
+      source $ZSH/oh-my-zsh.sh
+    '';
   };
+
 
   programs.firefox = {
     enable = true;
