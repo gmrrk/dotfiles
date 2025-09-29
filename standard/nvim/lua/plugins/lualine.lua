@@ -5,7 +5,7 @@ return
     config = function()
         require('lualine').setup({
         options = {
-            theme = 'ayu_mirage',
+            theme = 'gruvbox',
             section_separators = { left = ' ', right = ' '},
         }})
     end
